@@ -1,0 +1,4 @@
+ADD001,Chocolates,10,Test
+ADD002,Customized Handwritten card,12,Available
+ADD003,Soft Toy,16,Available
+ADD004,Fireworks,520,Available
