@@ -11,3 +11,4 @@ A001,Garden of Hearts,Anniversary,128,Available
 A002,Treasured Blooms,Anniversary,188,Available
 A003,Ray of Light,Anniversary,288,Available
 C003,Sun Flower,Condolence,38,Available
+B003,New Product,Birthday,150,Available

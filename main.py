@@ -5,9 +5,12 @@ from tabulate import tabulate
 # bring all the class from model
 from model import Product
 from model import Addon
+from model import Order
 
 products = []
 addons = []
+orders = []
+categories = ['Romantic', 'Birthday', 'Grand Opening', 'Condolence', 'Anniversary']
 
 
 # file io
@@ -78,6 +81,22 @@ def tabulating(table_data, headers):
     print(tabulate(table_data, headers=headers, tablefmt="grid"))
 
 
+def show_products():
+    table_data = [product.display() for product in products]
+    headers = ["Item Code", "Item Name", "Price", "Category", "Status"]
+    tabulating(table_data, headers)
+
+
+def show_addon():
+    table_data = [addon.display() for addon in addons]
+    headers = ["Item Code", "Name", "Price", "Status"]
+    tabulating(table_data, headers)
+
+
+def show_order():
+    table_data = [order.display() for order in orders]
+
+
 def check_unique_code(code, array):
     for item in array:
         if item.code == code:
@@ -93,32 +112,12 @@ def search_inventory(code):
     return None
 
 
-# def update_product(target):
-#     # updating
-#     # display name, price and status
-#     print(target.show())
-#     # edit price
-#     new_price = keyboard.read_int('Enter new price (left blank to keep the old data): ')
-#     if new_price is not None:
-#         target.price = new_price
-#     # edit status
-#     new_status = keyboard.read_string('Enter new status (left blank to keep the old data): ')
-#     if new_status != '':
-#         target.status = new_status
-#     # update the array
-#     for i in range(0, len(products)):
-#         if products[i].code == target.code:
-#             products[i] = target
-#
-#     save_inventory()
-
-
 def add_new_product():
     keyboard.print_title('New Product')
     name = keyboard.read_string('Name: ')
     code = keyboard.read_string('Code (Auto generated if left blank): ')
     price = keyboard.read_int('Price: ')
-    category = keyboard.choose_option(['Romantic', 'Birthday', 'Grand Opening', 'Condolence', 'Anniversary'], 'Select one of the category: ')
+    category = keyboard.choose_option(categories, 'Select one of the category: ')
     if code == '':
         code = category[0]
         idx = 1
@@ -137,6 +136,7 @@ def search_addon(code):
     for addon in addons:
         if addon.code == code:
             return addon
+    return None
 
 
 def update_item(target, array):
@@ -154,26 +154,6 @@ def update_item(target, array):
     for i in range(0, len(array)):
         if array[i].code == target.code:
             array[i] = target
-
-
-# def update_addon(target):
-#     print(target.show())
-#     # edit price
-#     new_price = keyboard.read_int('Enter new price (left blank to keep the old data): ')
-#     if new_price is not None:
-#         target.price = new_price
-#     # edit status
-#     new_status = keyboard.read_string('Enter new status (left blank to keep the old data): ')
-#     if new_status != '':
-#         target.status = new_status
-#     # # edit status
-#     # update the array
-#     for i in range(0, len(addons)):
-#         print(i)
-#         if addons[i].code == target.code:
-#             addons[i] = target
-#
-#     save_addon()
 
 
 def add_new_addon():
@@ -197,22 +177,18 @@ def add_new_addon():
 
 
 def inventory_management():
+    title = 'Inventory Management'
+    menu = ['View/Update Blooms', 'Add New Blooms', 'View/Update Add-Ons', 'Add new Add-Ons']
+    last_option = 'Back to Main Menu'
     while True:
-        option = keyboard.get_user_option('Inventory Management',
-                                          ['View/Update Blooms',
-                                           'Add New Blooms',
-                                           'View/Update Add-Ons',
-                                           'Add new Add-Ons'],
-                                          'Back to Main Menu')
+        option = keyboard.get_user_option(title, menu, last_option)
         match option:
             case 0:
                 print('Going back to main menu...')
                 break
             case 1:
                 while True:
-                    table_data = [product.display() for product in products]
-                    headers = ["Item Code", "Item Name", "Price", "Category", "Status"]
-                    tabulating(table_data, headers)
+                    show_products()
                     print('To update an item, enter the item code. Or enter 0 to go back to previous menu.')
                     result = keyboard.read_string('> ')
                     try:
@@ -233,9 +209,7 @@ def inventory_management():
                 add_new_product()
             case 3:
                 while True:
-                    table_data = [addon.display() for addon in addons]
-                    headers = ["Item Code", "Name", "Price", "Status"]
-                    tabulating(table_data, headers)
+                    show_addon()
                     print('To update an item, enter the item code. Or enter 0 to go back to previous menu.')
                     result = keyboard.read_string('> ')
                     try:
@@ -255,8 +229,44 @@ def inventory_management():
                 add_new_addon()
 
 
+def order_item():
+    while True:
+        code = keyboard.read_string('Please enter item code": ')
+        if search_inventory(code) is None:
+            print('The code entered does not exist !!!')
+        else:
+            break
+
+    orders.append(code)
+
+
+def create_order():
+    show_products()
+    selections = ['Filter products by category', 'Sort products by price', 'Order item']
+    prompt = '> '
+    option = keyboard.choose_option(selections, prompt)
+    match option:
+        case 0:
+            filtering_criteria = keyboard.choose_option(categories, prompt)
+
+        # case 1:
+        #
+        # case 2:
+
+
 def sales_management():
-    print('Sales Management')
+    title = 'Sales Management'
+    menu = ['Create Order', 'View Order']
+    last_option = 'Back to main menu'
+    while True:
+        option = keyboard.get_user_option(title, menu, last_option)
+        match option:
+            case 0:
+                print('Going back to main menu...')
+                break
+            case 1:
+                create_order()
+
 
 
 def main_menu():
