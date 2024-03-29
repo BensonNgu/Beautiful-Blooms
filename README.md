@@ -35,7 +35,16 @@ classDiagram
         +String addon_code  
         +boolean deliver
         +String delivery_address
-        +
+        +date delivery_date
+        +Int same_day_delivery_charges
+        +Int delivery_charges
+        +String cust_name
+        +String recipient_name
+        +String message
+        +String status
+
+        +same_day_delivery() boolean
+        +display() Order
     }
 
 ```

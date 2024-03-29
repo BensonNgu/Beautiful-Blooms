@@ -44,6 +44,7 @@ class Order:
                  item_code,
                  addon_code,
                  deliver,
+                 delivery_address,
                  delivery_date,
                  same_day_delivery_charges,
                  delivery_charges,
@@ -55,6 +56,7 @@ class Order:
         self.item_code = item_code
         self.addon_code = addon_code
         self.deliver = deliver
+        self.delivery_address = delivery_address
         self.deliver_date = delivery_date
         self.same_day_delivery_charges = same_day_delivery_charges
         self.deliver_charges = delivery_charges
