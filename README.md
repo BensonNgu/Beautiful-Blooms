@@ -3,9 +3,10 @@
 
 ```mermaid
 ---
-title: Animal example
+title: Class Diagram and relationship
 ---
 classDiagram
+direction RL
     class Product{
         +String code
         +String name
@@ -46,5 +47,9 @@ classDiagram
         +same_day_delivery() boolean
         +display() Order
     }
+
+    Order "*" -- "1" Product
+    Order "*" -- "1" Addon
+
 
 ```
