@@ -244,13 +244,10 @@ def create_order():
     show_products()
     selections = ['Filter products by category', 'Sort products by price', 'Order item']
     prompt = '> '
-    option = keyboard.choose_option(selections, prompt)
+    option = keyboard.choose_options(selections, prompt)
     match option:
-        case 0:
-            filtering_criteria = keyboard.choose_option(categories, prompt)
-
-        # case 1:
-        #
+        case 1:
+            filtering_criteria = keyboard.choose_options(categories, prompt, 'Go back')
         # case 2:
 
 
@@ -268,10 +265,12 @@ def sales_management():
                 create_order()
 
 
-
 def main_menu():
+    title = 'Beautiful Blooms'
+    menu = ['Inventory Management', 'Sales Management']
+    last_option = 'Exit'
     while True:
-        option = keyboard.get_user_option('Beautiful Blooms', ['Inventory Management', 'Sales Management'], 'Exit')
+        option = keyboard.get_user_option(title, menu, last_option)
         match option:
             case 0:
                 print('Good bye')

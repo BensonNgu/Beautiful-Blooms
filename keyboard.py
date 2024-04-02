@@ -49,6 +49,22 @@ def choose_option(data, prompt):
             print('Please choose option in range 0 - ', len(data))
 
 
+def choose_options(data, prompt, last_option=None):
+    table_data = []
+    for i in range(0, len(data)):
+        table_data.append((i+1, data[i]))
+    if last_option is not None:
+        table_data.append((0, last_option))
+    headers = ['Idx', 'Option']
+    print(tabulate(table_data, headers=headers, tablefmt='simple'))
+    while True:
+        ans = read_int(prompt)
+        if 1 <= ans <= len(data):
+            return ans
+        else:
+            print('Please choose option in range 0 - ', len(data))
+
+
 def print_title(title):
     # Calculate the length of the title for formatting
     title_length = len(title)
